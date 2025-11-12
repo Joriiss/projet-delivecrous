@@ -1,5 +1,19 @@
 const swaggerJsdoc = require('swagger-jsdoc');
 
+// Déterminer l'URL du serveur selon l'environnement
+const getServerUrl = () => {
+  if (process.env.RENDER_EXTERNAL_URL) {
+    // Sur Render, utiliser l'URL fournie
+    return process.env.RENDER_EXTERNAL_URL;
+  }
+  if (process.env.NODE_ENV === 'production' && process.env.API_URL) {
+    // URL de production personnalisée
+    return process.env.API_URL;
+  }
+  // Développement local
+  return `http://localhost:${process.env.PORT || 3000}`;
+};
+
 const options = {
   definition: {
     openapi: '3.0.0',
@@ -13,8 +27,8 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:${process.env.PORT || 3000}`,
-        description: 'Development server'
+        url: getServerUrl(),
+        description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server'
       }
     ],
     components: {
