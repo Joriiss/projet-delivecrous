@@ -295,16 +295,40 @@ Les tests couvrent :
 ```
 service-client/
 ├── src/
-│   ├── models/          # Modèles Mongoose (User, Ticket, Message)
-│   ├── routes/          # Définition des routes
+│   ├── models/          # Couche de données (Mongoose schemas)
+│   │   ├── User.js
+│   │   ├── Ticket.js
+│   │   ├── Message.js
+│   │   └── index.js
+│   ├── routes/          # Définition des routes HTTP
+│   │   ├── auth.js
+│   │   ├── tickets.js
+│   │   ├── messages.js
+│   │   └── index.js
 │   ├── controllers/     # Logique métier
-│   ├── middleware/      # Middlewares (auth, validation, rate limiting)
-│   ├── utils/           # Utilitaires (JWT, pagination, search)
-│   ├── config/          # Configuration (DB, Swagger)
-│   ├── tests/           # Tests Jest
-│   └── app.js           # Application Express principale
-├── .env                 # Variables d'environnement
+│   │   ├── authController.js
+│   │   ├── ticketController.js
+│   │   └── messageController.js
+│   ├── middleware/      # Middlewares Express
+│   │   ├── auth.js      # Authentification JWT
+│   │   ├── validation.js # Validation Joi
+│   │   └── rateLimiter.js # Rate limiting
+│   ├── utils/           # Utilitaires réutilisables
+│   │   ├── jwt.js       # Gestion des tokens JWT
+│   │   ├── pagination.js # Helpers pagination
+│   │   └── search.js    # Recherche full-text
+│   ├── config/          # Configuration
+│   │   ├── database.js  # Connexion MongoDB
+│   │   └── swagger.js   # Configuration Swagger
+│   ├── tests/           # Tests unitaires et d'intégration
+│   │   ├── auth.test.js
+│   │   ├── tickets.test.js
+│   │   └── messages.test.js
+│   ├── scripts/         # Scripts utilitaires
+│   │   └── seed.js      # Script de seed
+│   └── app.js           # Point d'entrée de l'application
 ├── package.json
+├── jest.config.js
 └── README.md
 ```
 
